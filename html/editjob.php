@@ -6,6 +6,7 @@ if ($mail == null) {
 
 
 if (isset($_POST["editjob"])) {
+	
 	$jid = htmlspecialchars($_POST['jid'], ENT_QUOTES, 'UTF-8');
 	$jname = htmlspecialchars($_POST['jname'], ENT_QUOTES, 'UTF-8');
 	$location = htmlspecialchars($_POST['location'], ENT_QUOTES, 'UTF-8');
@@ -17,7 +18,9 @@ if (isset($_POST["editjob"])) {
 	$type = htmlspecialchars($_POST['jobtype'], ENT_QUOTES, 'UTF-8');
 
 	// Prepare and execute the update statement with placeholders
-	$sql = "UPDATE job SET job_name=?, due_date=?, salary=?, location=?, qualification=?, job_type=?, experience=?, gender=? WHERE job_id=?";
+	$sql = "UPDATE job SET job_name=?, due_date=?, 
+	salary=?, location=?, qualification=?, job_type=?, experience=?, gender=? WHERE job_id=?";
+
 	$stmt = mysqli_prepare($conn, $sql);
 
 	// Bind parameters

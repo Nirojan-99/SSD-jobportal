@@ -197,16 +197,29 @@ include 'config.php';
 
 
 		if (isset($_POST["employeesign"])) {
+
 			$name = htmlspecialchars($_POST['Pname'], ENT_QUOTES, 'UTF-8');
 			$fname = htmlspecialchars($_POST['PFname'], ENT_QUOTES, 'UTF-8');
 			$mail = htmlspecialchars($_POST['Pmail'], ENT_QUOTES, 'UTF-8');
 			$num = htmlspecialchars($_POST['PMnum'], ENT_QUOTES, 'UTF-8');
 			$addr = htmlspecialchars($_POST['Paddr'], ENT_QUOTES, 'UTF-8');
-			$pass = password_hash(htmlspecialchars($_POST['Ppass'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);
+			
+			$pass = password_hash(htmlspecialchars($_POST['Ppass'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);//hithushi
+
 			$dob = htmlspecialchars($_POST['dob'], ENT_QUOTES, 'UTF-8');
 			$gender = htmlspecialchars($_POST['gender'], ENT_QUOTES, 'UTF-8');
 			$_SESSION['user'] =  "employee";
 
+			//parameter tampering
+			$mail = filter_var($mail, FILTER_VALIDATE_EMAIL);
+			$num = preg_replace("/[^0-9]/", "",$num); // Remove non-numeric characters
+			
+			$pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
+			if (!(preg_match($pattern, $pass))) {
+				echo "<script type=\"text/javascript\">
+				alert(\"enter strong password!!\");
+				</script>";
+			}
 
 			$mail = mysqli_real_escape_string($conn, $mail); // Sanitize user input
 
@@ -229,13 +242,6 @@ include 'config.php';
 				alert(\"Email address has already been taken!!\");
 				</script>";
 				$valid = 1;
-			}
-
-			$pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
-			if (!(preg_match($pattern, $pass))) {
-				echo "<script type=\"text/javascript\">
-				alert(\"enter strong password!!\");
-				</script>";
 			}
 
 			// Prepare the SQL statement with a parameter

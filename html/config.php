@@ -1,15 +1,18 @@
 <?php
-$secure = true; // Use true if your site uses HTTPS, otherwise use false
-$http_only = true; // Set HttpOnly flag to true
+
+$secure = true; 
+$http_only = true; 
+
 session_set_cookie_params([
-	'lifetime' => time() + 3600, // Session cookie will expire when the browser is closed
-	'path' => '/', // The path for which the session cookie is valid
-	'domain' => '', // The domain for which the session cookie is valid
-	'secure' => $secure, // Set to true if using HTTPS
-	'httponly' => $http_only // Set HttpOnly flag
+	'lifetime' => time() + 3600, 
+	'path' => '/', 
+	'domain' => '', 
+	'secure' => $secure, 
+	'httponly' => $http_only 
 ]);
 
 session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";

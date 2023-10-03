@@ -103,12 +103,15 @@ include 'config.php';
 
 			if (mysqli_num_rows($result) > 0) {
 				while ($row = mysqli_fetch_assoc($result)) {
-					if (password_verify($userPASSCHK, $row['password'])) {
+
+					if (password_verify($userPASSCHK, $row['password'])) {//hithushi
+
 						$_SESSION['mailP'] = $email;
 						$_SESSION['passP'] = $userPASSCHK;
 						$_SESSION['type'] = "employee";
 						header("Location: ../html/profileP.php");
 						exit();
+						
 					} else {
 						echo "<script type='text/javascript'>
 							document.getElementById('msg').innerHTML=\"Incorrect password !!\";

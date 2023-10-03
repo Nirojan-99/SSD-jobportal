@@ -2,14 +2,15 @@
 include 'config.php';
 $admin = $_SESSION['admin'];
 
+//hithushi
 if ($mail == null) {
 	header("Location: ../html/loginB.html");
 }
 
-
-if ($admin != true){
+if ($admin != true) {
 	echo "<script> location.replace(\"../html/loginB.html\"); </script>";
 }
+
 ?>
 
 <!DOCTYPE html>

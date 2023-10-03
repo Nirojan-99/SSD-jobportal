@@ -221,12 +221,10 @@ include_once '../libraries/vendor/autoload.php'
 					<div>
 						<i class="fas fa-key"></i>
 						<input type="password" placeholder="Password" id="pw1" required name="Cpass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-						<!-- <input type="password" placeholder="Password" id="pw1" required name="Cpass"> -->
 					</div>
 					<div>
 						<i class="fas fa-key"></i>
 						<input type="password" placeholder="Confirm Password" id="pw2" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-						<!-- <input type="password" placeholder="Confirm Password" id="pw2" required> -->
 					</div>
 					<p class="classic">Accept our Privacy Policy to SIGN UP</p>
 					<input type="submit" id="submit" value="Sign Up    " onclick="passwordchk()" name="employersign" disabled>
@@ -258,6 +256,17 @@ include_once '../libraries/vendor/autoload.php'
 			$addr = htmlspecialchars($_POST['Caddr'], ENT_QUOTES, 'UTF-8');
 			$pass = password_hash(htmlspecialchars($_POST['Cpass'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);
 
+			//parameter tampering
+			$mail = filter_var($mail, FILTER_VALIDATE_EMAIL);
+			$num = preg_replace("/[^0-9]/", "",$num); // Remove non-numeric characters
+
+			$pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
+			if (!(preg_match($pattern, $pass))) {
+				echo "<script type=\"text/javascript\">
+				alert(\"enter strong password!!\");
+				</script>";
+			}
+
 			$mail = mysqli_real_escape_string($conn, $mail); // Sanitize user input
 
 			// Prepare the SQL statement with a parameter
@@ -281,12 +290,6 @@ include_once '../libraries/vendor/autoload.php'
 				$valid = 1;
 			}
 
-			$pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
-			if (!(preg_match($pattern, $pass))) {
-				echo "<script type=\"text/javascript\">
-				alert(\"enter strong password!!\");
-				</script>";
-			}
 
 			// Prepare the SQL statement with a parameter
 			$sql = "SELECT * FROM employer WHERE email LIKE ?";

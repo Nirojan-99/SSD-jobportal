@@ -89,8 +89,11 @@
 
 					$sql = "INSERT INTO employer(company_name, ceo_name, location, email, password, mobile_number, profile_image) 
 							VALUES (?, ?, ?, ?, ?, ?, 'user1.png')";
+
 					$stmt = mysqli_prepare($conn, $sql);
+
 					mysqli_stmt_bind_param($stmt, "ssssss", $name, $fname, $addr, $mail, $pass, $num);
+					
 					mysqli_stmt_execute($stmt);
 
 					if (mysqli_affected_rows($conn) > 0) {
